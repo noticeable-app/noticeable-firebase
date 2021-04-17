@@ -9,11 +9,15 @@ export class Firebase {
                 return firebaseApp;
             }
 
+            const databaseUrl = `https://${projectId}.firebaseio.com`;
+
             return initializeApp(
-                {
-                    credential: serviceAccountPath ? credential.cert(serviceAccountPath) : undefined,
-                    databaseURL: `https://${projectId}.firebaseio.com`,
-                },
+                serviceAccountPath
+                    ? {
+                          credential: credential.cert(serviceAccountPath),
+                          databaseURL: databaseUrl,
+                      }
+                    : { databaseURL: databaseUrl },
                 projectId,
             );
         } else {
