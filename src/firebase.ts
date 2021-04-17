@@ -1,7 +1,7 @@
 import { app, apps, credential, initializeApp } from 'firebase-admin';
 
 export class Firebase {
-    static init(projectId?: string): app.App {
+    static init(projectId?: string, serviceAccountPath?: string): app.App {
         if (projectId) {
             const firebaseApp = this.findExistingFirebaseApp(projectId);
             if (firebaseApp) {
@@ -11,7 +11,7 @@ export class Firebase {
 
             return initializeApp(
                 {
-                    credential: credential.cert(`${process.cwd()}/keyfiles/${projectId}.json`),
+                    credential: serviceAccountPath ? credential.cert(serviceAccountPath) : undefined,
                     databaseURL: `https://${projectId}.firebaseio.com`,
                 },
                 projectId,
@@ -27,7 +27,7 @@ export class Firebase {
         }
     }
 
-    static findExistingFirebaseApp(appName: string = '[DEFAULT]'): app.App {
-        return apps.find((firebaseApp) => firebaseApp.name === appName);
+    static findExistingFirebaseApp(projectId: string): app.App | undefined {
+        return apps.find((firebaseApp) => firebaseApp.options.projectId === projectId);
     }
 }
