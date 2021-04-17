@@ -31,7 +31,7 @@ export class Firebase {
         }
     }
 
-    static findExistingFirebaseApp(projectId: string): app.App | undefined {
-        return apps.find((firebaseApp) => firebaseApp.options.projectId === projectId);
+    static findExistingFirebaseApp(appName: string = '[DEFAULT]'): app.App | undefined {
+        return apps.find((firebaseApp) => firebaseApp.name === appName);
     }
 }
