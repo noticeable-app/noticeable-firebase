@@ -16,8 +16,9 @@ export class Firebase {
                     ? {
                           credential: credential.cert(serviceAccountPath),
                           databaseURL: databaseUrl,
+                          projectId: projectId
                       }
-                    : { databaseURL: databaseUrl },
+                    : { databaseURL: databaseUrl, projectId: projectId },
                 projectId,
             );
         } else {
