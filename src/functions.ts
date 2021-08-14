@@ -1,33 +1,25 @@
-import * as camelCase from 'lodash/camelCase';
-
 export class Functions {
     /**
-     * A dictionary of functions to export.
+     * Initializes a set of functions.
      *
-     * The key is the path to the source code of the function to export
-     * and the value is a boolean that says whether the function must be
-     * exported or not.
+     * @param functions A dictionary of functions to export.
+     * The key is the function name and the value is the path to the source code of the function to export.
      */
-    public static init(functions) {
+    public static init(functions: Record<string, string>): Record<string, unknown> {
         const exports = {};
 
-        for (const path in functions) {
-            // exports enabled functions only
-            if (functions[path]) {
-                // removes file extension
-                const chunks = path.slice(0, -3).split('/');
-                chunks.shift();
-                // coerces file name to valid function name
-                const functionName = camelCase(chunks);
+        if (process.env.FUNCTION_TARGET) {
+            const functionPath = functions[process.env.FUNCTION_TARGET];
 
-                // export code for the current process function only
-                if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === functionName) {
-                    exports[functionName] = require(`${process.cwd()}/dist/${path}`);
-
-                    if (process.env.FUNCTION_NAME === functionName) {
-                        break;
-                    }
-                }
+            if (functionPath) {
+                exports[process.env.FUNCTION_TARGET] = require(`${process.cwd()}/dist/${functionPath}`);
+            } else {
+                throw new Error(`No matching function found: ${process.env.FUNCTION_TARGET}`);
+            }
+        } else {
+            for (const functionName in functions) {
+                const functionPath = functions[functionName];
+                exports[functionName] = require(`${process.cwd()}/dist/${functionPath}`);
             }
         }
 
