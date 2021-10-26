@@ -1,18 +1,14 @@
-import { firestore } from 'firebase-admin';
+import { Firestore as FirebaseDb, Query, Timestamp } from 'firebase-admin/firestore';
 
 export class Firestore {
-    public static deleteCollection(db: firestore.Firestore, collectionPath: string, batchSize = 500): Promise<number> {
+    public static deleteCollection(db: FirebaseDb, collectionPath: string, batchSize = 500): Promise<number> {
         const collectionRef = db.collection(collectionPath);
         const query = collectionRef.orderBy('__name__').limit(batchSize);
 
         return Firestore.deleteQueryBatch(db, query, batchSize);
     }
 
-    public static async deleteQueryBatch(
-        db: firestore.Firestore,
-        query: firestore.Query,
-        batchSize = 500,
-    ): Promise<number> {
+    public static async deleteQueryBatch(db: FirebaseDb, query: Query, batchSize = 500): Promise<number> {
         let deleteCount = 0;
 
         while (true) {
@@ -38,11 +34,11 @@ export class Firestore {
 export class FirestoreLock {
     private readonly collectionPath: string;
 
-    private readonly db: firestore.Firestore;
+    private readonly db: FirebaseDb;
 
     private readonly name: string;
 
-    constructor(db: firestore.Firestore, name: string, collectionPath = 'locks') {
+    constructor(db: FirebaseDb, name: string, collectionPath = 'locks') {
         this.collectionPath = collectionPath;
         this.db = db;
         this.name = name;
@@ -51,7 +47,7 @@ export class FirestoreLock {
     public async acquire(): Promise<boolean> {
         try {
             await this.db.collection(this.collectionPath).doc(this.name).create({
-                creationTime: firestore.Timestamp.now(),
+                creationTime: Timestamp.now(),
             });
 
             return true;
