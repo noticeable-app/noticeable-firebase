@@ -1,14 +1,14 @@
-import { Firestore as FirebaseDb, Query, Timestamp } from 'firebase-admin/firestore';
+import { Firestore as FirestoreDatabase, Query, Timestamp } from 'firebase-admin/firestore';
 
 export class Firestore {
-    public static deleteCollection(db: FirebaseDb, collectionPath: string, batchSize = 500): Promise<number> {
+    public static deleteCollection(db: FirestoreDatabase, collectionPath: string, batchSize = 500): Promise<number> {
         const collectionRef = db.collection(collectionPath);
         const query = collectionRef.orderBy('__name__').limit(batchSize);
 
         return Firestore.deleteQueryBatch(db, query, batchSize);
     }
 
-    public static async deleteQueryBatch(db: FirebaseDb, query: Query, batchSize = 500): Promise<number> {
+    public static async deleteQueryBatch(db: FirestoreDatabase, query: Query, batchSize = 500): Promise<number> {
         let deleteCount = 0;
 
         while (true) {
@@ -34,11 +34,11 @@ export class Firestore {
 export class FirestoreLock {
     private readonly collectionPath: string;
 
-    private readonly db: FirebaseDb;
+    private readonly db: FirestoreDatabase;
 
     private readonly name: string;
 
-    constructor(db: FirebaseDb, name: string, collectionPath = 'locks') {
+    constructor(db: FirestoreDatabase, name: string, collectionPath = 'locks') {
         this.collectionPath = collectionPath;
         this.db = db;
         this.name = name;
