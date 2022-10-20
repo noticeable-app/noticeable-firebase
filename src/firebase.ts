@@ -24,7 +24,6 @@ export class Firebase {
         } else {
             const firebaseApp = this.findExistingFirebaseApp(projectId);
             if (firebaseApp) {
-                console.warn(`Default app is already initialized, will use existing instance`);
                 return firebaseApp;
             }
 
