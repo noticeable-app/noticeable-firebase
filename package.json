@@ -1,14 +1,14 @@
 {
   "name": "@noticeable-app/noticeable-firebase",
-  "version": "12.1.0",
+  "version": "13.0.0",
   "description": "Helper functions to simplify Firebase related tasks.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "yarn clean && yarn lint && ./node_modules/.bin/tsc",
+    "build": "npm run clean && npm run lint && ./node_modules/.bin/tsc",
     "clean": "rm -rf dist/",
     "lint": "./node_modules/.bin/eslint src/*",
-    "prepare": "yarn clean && yarn build"
+    "prepare": "npm run clean && npm run build"
   },
   "repository": {
     "type": "git",
@@ -26,16 +26,16 @@
   },
   "homepage": "https://github.com/noticeable-app/noticeable-firebase#readme",
   "dependencies": {
-    "firebase-admin": "^11.3.0"
+    "firebase-admin": "^11.5.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.43.0",
-    "@typescript-eslint/parser": "^5.43.0",
-    "eslint": "^8.28.0",
-    "eslint-config-prettier": "^8.5.0",
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
+    "eslint": "^8.36.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.7.1",
-    "typescript": "^4.9.3"
+    "prettier": "^2.8.6",
+    "typescript": "^5.0.2"
   },
   "files": [
     "dist/**"
