@@ -10,14 +10,15 @@ export class Firestore {
 
     public static async deleteQueryBatch(db: FirestoreDatabase, query: Query, batchSize = 500): Promise<number> {
         let deleteCount = 0;
+        let size = 0;
 
-        while (true) {
+        do {
             const querySnapshot = await query.limit(batchSize).get();
+            size = querySnapshot.size;
+            deleteCount += size;
 
-            deleteCount += querySnapshot.size;
-
-            if (querySnapshot.size === 0) {
-                return deleteCount;
+            if (size === 0) {
+                break;
             }
 
             const batch = db.batch();
@@ -27,8 +28,11 @@ export class Firestore {
             });
 
             await batch.commit();
-        }
+        } while (size > 0);
+
+        return deleteCount;
     }
+
 }
 
 export class FirestoreLock {
