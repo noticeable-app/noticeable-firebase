@@ -5,7 +5,7 @@
     "noImplicitReturns": true,
     "outDir": "dist",
     "sourceMap": true,
-    "target": "ES2021"
+    "target": "ES2022"
   },
   "exclude": [
     "dist/",

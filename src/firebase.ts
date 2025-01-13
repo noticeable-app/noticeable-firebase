@@ -1,15 +1,17 @@
-import { App, cert, getApps, initializeApp } from 'firebase-admin/app';
+import { App, cert, getApps, initializeApp } from 'firebase-admin/app'
 
 export class Firebase {
     static init(projectId?: string, serviceAccountPath?: string): App {
         if (projectId) {
-            const firebaseApp = this.findExistingFirebaseApp(projectId);
+            const firebaseApp = this.findExistingFirebaseApp(projectId)
             if (firebaseApp) {
-                console.info(`App '${projectId}' is already initialized, will use existing instance`);
-                return firebaseApp;
+                console.info(
+                    `App '${projectId}' is already initialized, will use existing instance`,
+                )
+                return firebaseApp
             }
 
-            const databaseUrl = `https://${projectId}.firebaseio.com`;
+            const databaseUrl = `https://${projectId}.firebaseio.com`
 
             return initializeApp(
                 serviceAccountPath
@@ -20,18 +22,20 @@ export class Firebase {
                       }
                     : { databaseURL: databaseUrl, projectId: projectId },
                 projectId,
-            );
+            )
         } else {
-            const firebaseApp = this.findExistingFirebaseApp(projectId);
+            const firebaseApp = this.findExistingFirebaseApp(projectId)
             if (firebaseApp) {
-                return firebaseApp;
+                return firebaseApp
             }
 
-            return initializeApp();
+            return initializeApp()
         }
     }
 
-    static findExistingFirebaseApp(appName: string = '[DEFAULT]'): App | undefined {
-        return getApps().find((firebaseApp) => firebaseApp.name === appName);
+    static findExistingFirebaseApp(
+        appName: string = '[DEFAULT]',
+    ): App | undefined {
+        return getApps().find(firebaseApp => firebaseApp.name === appName)
     }
 }
