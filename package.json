@@ -7,7 +7,7 @@
   "scripts": {
     "build": "npm run clean && npm run lint && ./node_modules/.bin/tsc",
     "clean": "rm -rf dist/",
-    "lint": "./node_modules/.bin/eslint src/*",
+    "lint": "eslint src/*",
     "prepare": "npm run clean && npm run build"
   },
   "repository": {
