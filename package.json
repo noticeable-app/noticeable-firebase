@@ -1,6 +1,6 @@
 {
   "name": "@noticeable-app/noticeable-firebase",
-  "version": "18.0.0",
+  "version": "18.0.1",
   "description": "Helper functions to simplify Firebase related tasks.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
