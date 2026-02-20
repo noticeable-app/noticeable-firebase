@@ -22,7 +22,7 @@ export class Firestore {
         batchSize = 500,
     ): Promise<number> {
         let deleteCount = 0
-        let size = 0
+        let size
 
         do {
             const querySnapshot = await query.limit(batchSize).get()
