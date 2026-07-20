@@ -4,6 +4,7 @@
     "module": "commonjs",
     "noImplicitReturns": true,
     "outDir": "dist",
+    "rootDir": "src",
     "sourceMap": true,
     "target": "ES2022"
   },

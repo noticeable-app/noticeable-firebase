@@ -8,7 +8,7 @@ export class Functions {
     public static init(
         functions: Record<string, string>,
     ): Record<string, unknown> {
-        const exports = {}
+        const exports: Record<string, unknown> = {}
 
         if (process.env.FUNCTION_TARGET) {
             const functionPath = functions[process.env.FUNCTION_TARGET]
